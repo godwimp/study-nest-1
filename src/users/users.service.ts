@@ -18,6 +18,13 @@ export class UsersService {
         return newUser;
     }
 
+    search(keyword: string): User[] {
+        return this.users.filter(user =>
+            user.name.toLowerCase().includes(keyword.toLowerCase()) ||
+            user.email.toLowerCase().includes(keyword.toLowerCase())
+        );
+    }
+
     findAll(): User[] {
         return this.users;
     }
@@ -70,13 +77,18 @@ export class UsersService {
         return results;
     }
 
-    search(keyword: string): User[] {
-        return this.users.filter(user =>
-            user.name.toLowerCase().includes(keyword.toLowerCase()) ||
-            user.email.toLowerCase().includes(keyword.toLowerCase())
-        );
-    }
+   
 
+    findByName(name: string): User[] {
+        const users = this.users.filter(user =>
+            user.name.toLowerCase().includes(name.toLowerCase())
+        );
+
+        if (users.length === 0) {
+            throw new NotFoundException(`User with name ${name} can not be found`);
+        }
+        return users;
+    }
     filterByAge(minAge: number, maxAge: number): User[] {
         return this.users.filter(user =>
             user.age >= minAge && user.age <= maxAge
