@@ -6,10 +6,11 @@ import { Controller,
     Body,
     Param,
     HttpCode,
-    HttpStatus
+    HttpStatus,
+    Query
  } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto, PaginationDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -43,5 +44,26 @@ export class UsersController {
     @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id') id: string) {
         return this.usersService.remove(id);
+    }
+
+    @Get('paginated')
+    findAllPaginated(@Query() paginationDto: PaginationDto) {
+        return this.usersService.findAllPaginated(
+            paginationDto.page,
+            paginationDto.limit
+        );
+    }
+
+    @Get('search')
+    search(@Query('keyword') keyword: string) {
+        return this.usersService.search(keyword);
+    }
+
+    @Get('filter-age')
+    filterByAge(
+        @Query('min') min: string,
+        @Query('max') max: string
+    ) {
+        return this.usersService.filterByAge(+min, +max);
     }
 }

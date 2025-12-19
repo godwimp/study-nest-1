@@ -54,4 +54,31 @@ export class UsersService {
         this.users.splice(userIndex, 1);
         return { message: 'User deleted' };
     }
+
+    findAllPaginated(page: number = 1, limit: number = 10) {
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
+        const results = {
+            total: this.users.length,
+            page,
+            limit,
+            data: this.users.slice(startIndex, endIndex),
+        };
+
+        return results;
+    }
+
+    search(keyword: string): User[] {
+        return this.users.filter(user =>
+            user.name.toLowerCase().includes(keyword.toLowerCase()) ||
+            user.email.toLowerCase().includes(keyword.toLowerCase())
+        );
+    }
+
+    filterByAge(minAge: number, maxAge: number): User[] {
+        return this.users.filter(user =>
+            user.age >= minAge && user.age <= maxAge
+        );
+    }
 }
