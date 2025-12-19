@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 
@@ -9,7 +9,7 @@ export class UsersService {
 
     create(createUserDto: CreateUserDto): User {
         const newUser: User = {
-            id: uuidv4(),
+            id: randomUUID(),
             ...createUserDto,
             createdAt: new Date(),
         };
