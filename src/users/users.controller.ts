@@ -28,13 +28,18 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  // PENTING: Taruh route spesifik SEBELUM route dynamic
-  @Get('search')  // ← Harus di atas @Get(':id')
+  // PENTING: Route spesifik HARUS di atas route dynamic (:id)
+  @Get('search')  // ← Harus di atas :id
   findByName(@Query('name') name: string) {
     return this.usersService.findByName(name);
   }
 
-  @Get(':id')  // ← Route dynamic harus paling bawah
+  @Get('email')  // ← Harus di atas :id
+  findByEmail(@Query('email') email: string) {
+    return this.usersService.findByEmail(email);
+  }
+
+  @Get(':id')  // ← Route dynamic harus paling bawah di GET
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
