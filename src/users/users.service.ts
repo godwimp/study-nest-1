@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { NestFactory } from '@nestjs/core';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,7 @@ export class UsersService {
     findOne(id: string): User {
         const user = this.users.find(user => user.id === id);
         if (!user) {
-            throw new Error('User not found');
+            throw new NotFoundException(`User with ID ${id} is not found`);
         }
         return user;
     }
@@ -33,7 +34,7 @@ export class UsersService {
         const userIndex = this.users.findIndex(user => user.id === id);
 
         if(userIndex === -1) {
-            throw new Error('User not found');
+            throw new NotFoundException(`User with ID ${id} is not found`);
         }
 
         this.users[userIndex] = {
@@ -48,7 +49,7 @@ export class UsersService {
         const userIndex = this.users.findIndex(user => user.id === id);
 
         if (userIndex === -1) {
-            throw new Error('User not found, can not delete');
+            throw new NotFoundException(`User ${id} not found`);
         }
 
         this.users.splice(userIndex, 1);
