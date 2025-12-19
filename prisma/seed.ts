@@ -1,9 +1,16 @@
+console.log('Importing Prisma Client...');
 import { PrismaClient } from '@prisma/client';
+console.log('Prisma Client imported');
 
 const prisma = new PrismaClient();
+console.log('Prisma Client instantiated');
 
 async function main() {
     console.log('Start seeding ...');
+
+    await prisma.product.deleteMany();
+    await prisma.user.deleteMany();
+    console.log('Cleared existing data');
 
     // Seed User
     const usersData = Array.from({ length: 10 }).map((_, i) => ({
@@ -16,6 +23,7 @@ async function main() {
     });
 
     const users = await prisma.user.findMany();
+    console.log(`Created ${users.length} users`);
 
 
     // Seed Products
