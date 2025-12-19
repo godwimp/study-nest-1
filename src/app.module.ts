@@ -7,7 +7,16 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule,],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    PrismaModule,
+    UsersModule, 
+    ProductsModule,
+
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
