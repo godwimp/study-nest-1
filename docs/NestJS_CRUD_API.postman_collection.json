@@ -1,0 +1,542 @@
+{
+	"info": {
+		"_postman_id": "nest-crud-api-2024",
+		"name": "NestJS CRUD API - Users & Products",
+		"description": "Complete CRUD API collection for Users and Products with PostgreSQL + Prisma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@mail.com\",\n  \"age\": 25\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Create a new user. Email must be unique."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Get all users with their products (includes relation)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Get a specific user by UUID with their products"
+					},
+					"response": []
+				},
+				{
+					"name": "Search User by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/search?name=john",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "john",
+									"description": "Search keyword (case insensitive)"
+								}
+							]
+						},
+						"description": "Search users by name (partial match, case insensitive)"
+					},
+					"response": []
+				},
+				{
+					"name": "Find User by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/email?email=user1@mail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user1@mail.com",
+									"description": "Exact email address"
+								}
+							]
+						},
+						"description": "Find a user by exact email address"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Updated\",\n  \"age\": 30\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Update user data. All fields are optional."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Delete a user. All products owned by this user will be deleted automatically (cascade delete)."
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD operations for Users"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Laptop Dell\",\n  \"price\": 15000000,\n  \"stock\": 10,\n  \"ownerId\": \"{{user_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Create a new product. Owner ID must be a valid user UUID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Get all products with owner information (includes relation)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							]
+						},
+						"description": "Get a specific product by UUID with owner information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Owner ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/owner/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"owner",
+								"{{user_id}}"
+							]
+						},
+						"description": "Get all products owned by a specific user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Laptop Dell XPS\",\n  \"price\": 14000000,\n  \"stock\": 8\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							]
+						},
+						"description": "Update product data. All fields are optional. Can transfer ownership by updating ownerId."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							]
+						},
+						"description": "Delete a product by UUID"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD operations for Products"
+		},
+		{
+			"name": "Testing Scenarios",
+			"item": [
+				{
+					"name": "Scenario 1: Create User and Product",
+					"item": [
+						{
+							"name": "Step 1 - Create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@mail.com\",\n  \"age\": 28\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								},
+								"description": "Create Alice, then copy her ID for next step"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2 - Create Product for Alice",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"MacBook Pro\",\n  \"price\": 25000000,\n  \"stock\": 5,\n  \"ownerId\": \"PASTE_ALICE_ID_HERE\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									]
+								},
+								"description": "Create product owned by Alice"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3 - View Alice's Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/owner/PASTE_ALICE_ID_HERE",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"owner",
+										"PASTE_ALICE_ID_HERE"
+									]
+								},
+								"description": "Get all products owned by Alice"
+							},
+							"response": []
+						}
+					],
+					"description": "Complete workflow: Create user and their products"
+				},
+				{
+					"name": "Scenario 2: Transfer Product Ownership",
+					"item": [
+						{
+							"name": "Step 1 - Find New Owner",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/users/search?name=user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"search"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "user"
+										}
+									]
+								},
+								"description": "Search for users, copy new owner's ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2 - Transfer Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ownerId\": \"PASTE_NEW_OWNER_ID_HERE\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/products/{{product_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"{{product_id}}"
+									]
+								},
+								"description": "Transfer product to new owner"
+							},
+							"response": []
+						}
+					],
+					"description": "Complete workflow: Transfer product ownership"
+				},
+				{
+					"name": "Scenario 3: Cascade Delete Test",
+					"item": [
+						{
+							"name": "Step 1 - View User with Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								},
+								"description": "View user and their products before delete"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2 - Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								},
+								"description": "Delete user (will cascade delete all their products)"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3 - Verify Products Deleted",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									]
+								},
+								"description": "Check that user's products are gone"
+							},
+							"response": []
+						}
+					],
+					"description": "Test cascade delete: Delete user and verify products are auto-deleted"
+				}
+			],
+			"description": "Real-world testing scenarios"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string",
+			"description": "Paste user UUID here after creating a user"
+		},
+		{
+			"key": "product_id",
+			"value": "",
+			"type": "string",
+			"description": "Paste product UUID here after creating a product"
+		}
+	]
+}
