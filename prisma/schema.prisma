@@ -20,6 +20,7 @@ model User {
   email      String     @unique @db.VarChar(100)
   password   String     @db.VarChar(255)
   age        Int
+  role       Role       @default(USER)
   createdAt  DateTime   @default(now()) @map("created_at")
   updatedAt  DateTime   @updatedAt @map("updated_at")
 
