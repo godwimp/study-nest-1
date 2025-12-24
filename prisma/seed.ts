@@ -1,9 +1,12 @@
 console.log('Importing Prisma Client...');
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 console.log('Prisma Client imported');
 
 const prisma = new PrismaClient();
 console.log('Prisma Client instantiated');
+
+const SALT_ROUNDS = 10;
 
 async function main() {
     console.log('Start seeding ...');
@@ -13,10 +16,12 @@ async function main() {
     console.log('Cleared existing data');
 
     // Seed User
+    const defaultPassword = await bcrypt.hash('password123', SALT_ROUNDS);
     const usersData = Array.from({ length: 10 }).map((_, i) => ({
         name: `User ${i + 1}`,
         email: `user${i + 1}@mail.com`,
         age: 18 + i,
+        password: defaultPassword,
     }));
     await prisma.user.createMany({
         data: usersData,
